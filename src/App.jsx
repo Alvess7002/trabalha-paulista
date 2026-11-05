@@ -17,6 +17,7 @@ export default function App() {
         <Route path="empreendedorismo" element={<Business />} />
         <Route path="sobre" element={<About />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="login" element={<Login />} />
       </Route>
     </Routes>
   )
