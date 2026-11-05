@@ -172,3 +172,6 @@ ul { padding-left: 1.2rem; }
 .alert-info { background: #e0f2fe; color: #075985; }
 .auth-links { display: flex; flex-direction: column; gap: 0.4rem; margin: 1.25rem 0 0.5rem; font-size: 0.95rem; }
 .auth-demo { font-size: 0.8rem; margin: 0.5rem 0 0; }
+.dashboard-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.dashboard-head h1 { font-size: 2rem; }
+.dashboard-head p { margin: 0; }
