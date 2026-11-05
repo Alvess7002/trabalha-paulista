@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Briefcase, Menu, X } from 'lucide-react'
+import AuthActions from './AuthActions'
 
 const links = [
   { to: '/', label: 'Início' },
@@ -47,7 +48,7 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="nav-actions">{/* Ações de login entram na Etapa 6 */}</div>
+          <div className="nav-actions"><AuthActions onNavigate={close} /></div>
         </nav>
       </div>
     </header>
