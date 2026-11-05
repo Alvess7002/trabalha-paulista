@@ -29,16 +29,15 @@ Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitaç
 - Pessoas interessadas em qualificação profissional.
 - Pequenos empreendedores de Paulista–PE.
 
-## Funcionalidades (escopo da versão 1)
+## Funcionalidades implementadas
 
-Situação: **planejadas** (serão marcadas como implementadas na Etapa 8).
-
-- [ ] Página inicial com navegação principal
-- [ ] Páginas de vagas, capacitação, empreendedorismo e sobre
-- [ ] Login com validação e mostrar/ocultar senha
-- [ ] Cadastro com validação
-- [ ] Recuperação de senha (demonstrativa)
-- [ ] Área restrita com logoff e bloqueio sem autenticação
+- [x] Página inicial com navegação principal e seções de oportunidades, capacitação e empreendedorismo
+- [x] Páginas de vagas, capacitação, empreendedorismo e sobre (dados fictícios)
+- [x] Login com validação, mostrar/ocultar senha e feedback de acesso
+- [x] Cadastro com validação e confirmação de senha
+- [x] Recuperação de senha (apenas demonstrativa)
+- [x] Área restrita com logoff e bloqueio sem autenticação
+- [x] Layout responsivo (desktop e celular)
 
 ## Tecnologias
 
@@ -59,3 +58,29 @@ npm run dev      # servidor de desenvolvimento
 npm run build    # build de produção
 npm run lint     # análise estática
 ```
+## Estrutura de pastas
+
+```
+src/
+├── components/   # Navbar, Footer, Layout, PageHero, InfoCard, FormField, ProtectedRoute, AuthActions
+├── context/      # AuthProvider e contexto de autenticação
+├── data/         # Dados demonstrativos (vagas, cursos, negócios)
+├── hooks/        # useAuth
+├── pages/        # Páginas da aplicação
+└── utils/        # Validadores de formulário
+```
+
+## Limitações da versão atual
+
+- Sem backend nem banco de dados; todos os conteúdos são fictícios.
+- A autenticação é **apenas demonstrativa**: usuários e sessão ficam no `localStorage`, com senha sem criptografia. Não oferece segurança real.
+- A recuperação de senha não envia e-mails.
+- Não há busca, filtros ou candidatura a vagas.
+
+## Melhorias planejadas (ainda não implementadas)
+
+- Backend e banco de dados com autenticação real.
+- Cadastro de vagas, cursos e negócios por usuários.
+- Busca e filtros por categoria e bairro.
+- Candidatura a vagas e perfil de usuário.
+- Testes automatizados.
