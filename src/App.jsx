@@ -6,6 +6,7 @@ import Courses from './pages/Courses'
 import Business from './pages/Business'
 import About from './pages/About'
 import NotFound from './pages/NotFound'
+import register from './pages/Register'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="sobre" element={<About />} />
         <Route path="*" element={<NotFound />} />
         <Route path="login" element={<Login />} />
+        <Route path="cadastro" element={<Register />} />
       </Route>
     </Routes>
   )
