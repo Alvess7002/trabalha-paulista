@@ -48,7 +48,9 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="nav-actions"><AuthActions onNavigate={close} /></div>
+          <div className="nav-actions">
+            <AuthActions onNavigate={close} />
+          </div>
         </nav>
       </div>
     </header>

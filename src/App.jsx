@@ -1,13 +1,16 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Jobs from './pages/Jobs'
 import Courses from './pages/Courses'
 import Business from './pages/Business'
 import About from './pages/About'
-import NotFound from './pages/NotFound'
-import register from './pages/Register'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
+import Dashboard from './pages/Dashboard'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -18,10 +21,18 @@ export default function App() {
         <Route path="capacitacao" element={<Courses />} />
         <Route path="empreendedorismo" element={<Business />} />
         <Route path="sobre" element={<About />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="login" element={<Login />} />
         <Route path="cadastro" element={<Register />} />
         <Route path="esqueci-senha" element={<ForgotPassword />} />
+        <Route
+          path="area-restrita"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )
