@@ -1,16 +1,61 @@
-# React + Vite
+# Trabalha Paulista
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma de empregabilidade, capacitação profissional e empreendedorismo local em Paulista–PE.
 
-Currently, two official plugins are available:
+> Projeto acadêmico desenvolvido de forma progressiva. Esta é a primeira versão, com dados fictícios e sem backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Problema identificado
 
-## React Compiler
+- Dificuldade de encontrar oportunidades de emprego.
+- Dificuldade de localizar cursos de capacitação.
+- Pequenos empreendedores têm dificuldade para divulgar seus negócios.
+- Informações importantes estão dispersas em diferentes plataformas.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Objetivo geral
 
-## Expanding the ESLint configuration
+Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitação e divulgação de pequenos negócios de Paulista–PE.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Objetivos específicos
+
+- Apresentar vagas de emprego de forma organizada.
+- Facilitar a descoberta de cursos de capacitação.
+- Dar visibilidade a pequenos empreendedores locais.
+- Oferecer uma interface simples, responsiva e acessível.
+- Preparar a base do código para evoluções futuras.
+
+## Público-alvo
+
+- Pessoas em busca de emprego ou recolocação.
+- Pessoas interessadas em qualificação profissional.
+- Pequenos empreendedores de Paulista–PE.
+
+## Funcionalidades (escopo da versão 1)
+
+Situação: **planejadas** (serão marcadas como implementadas na Etapa 8).
+
+- [ ] Página inicial com navegação principal
+- [ ] Páginas de vagas, capacitação, empreendedorismo e sobre
+- [ ] Login com validação e mostrar/ocultar senha
+- [ ] Cadastro com validação
+- [ ] Recuperação de senha (demonstrativa)
+- [ ] Área restrita com logoff e bloqueio sem autenticação
+
+## Tecnologias
+
+React, Vite, JavaScript, HTML5, CSS3, React Router DOM, Lucide React, ESLint (com regras de React Hooks), Git e GitHub.
+
+## Integrantes
+
+- Giovanni Alves Bezerra da Silva
+- Heytor Nascimento de Santana
+- Matheus Ribeiro Lima Alves
+- Nicolas França Amaral Sampaio
+
+## Como executar
+
+```bash
+npm install
+npm run dev      # servidor de desenvolvimento
+npm run build    # build de produção
+npm run lint     # análise estática
+```
