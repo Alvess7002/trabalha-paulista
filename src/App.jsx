@@ -7,6 +7,7 @@ import Business from './pages/Business'
 import About from './pages/About'
 import NotFound from './pages/NotFound'
 import register from './pages/Register'
+import ForgotPassword from './pages/ForgotPassword'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="login" element={<Login />} />
         <Route path="cadastro" element={<Register />} />
+        <Route path="esqueci-senha" element={<ForgotPassword />} />
       </Route>
     </Routes>
   )
