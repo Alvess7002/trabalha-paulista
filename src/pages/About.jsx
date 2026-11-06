@@ -1,11 +1,7 @@
 import PageHero from '../components/PageHero'
+import { useFeatures } from '../hooks/useFeatures'
 
-const objectives = [
-  'Apresentar vagas de emprego de forma organizada.',
-  'Facilitar a descoberta de cursos de capacitação.',
-  'Dar visibilidade a pequenos empreendedores locais.',
-  'Centralizar informações hoje dispersas em várias plataformas.',
-]
+const objectives = ['about.g1', 'about.g2', 'about.g3', 'about.g4']
 
 const team = [
   'Giovanni Alves Bezerra da Silva',
@@ -15,33 +11,29 @@ const team = [
 ]
 
 export default function About() {
+  const { t } = useFeatures()
   return (
     <>
-      <PageHero title="Sobre o projeto" subtitle="Conheça a proposta do Trabalha Paulista." />
+      <PageHero title={t('about.title')} subtitle={t('about.subtitle')} />
       <section className="container section prose">
-        <h2>Proposta</h2>
+        <h2>{t('about.h.proposal')}</h2>
         <p>
-          O Trabalha Paulista é uma plataforma de empregabilidade, capacitação profissional e
-          empreendedorismo local em Paulista–PE. Ela nasce para resolver quatro problemas:
-          dificuldade de encontrar vagas, dificuldade de localizar cursos, dificuldade dos
-          pequenos empreendedores em divulgar seus negócios e informações espalhadas em
-          diferentes plataformas.
+          {t('about.proposal')}
         </p>
-        <h2>Objetivos</h2>
+        <h2>{t('about.h.goals')}</h2>
         <ul>
           {objectives.map((o) => (
-            <li key={o}>{o}</li>
+            <li key={o}>{t(o)}</li>
           ))}
         </ul>
-        <h2>Equipe</h2>
+        <h2>{t('about.h.team')}</h2>
         <ul>
           {team.map((n) => (
             <li key={n}>{n}</li>
           ))}
         </ul>
         <p className="notice">
-          Esta é uma versão acadêmica e demonstrativa: os conteúdos são fictícios e não há
-          backend nem autenticação real.
+          {t('about.notice')}
         </p>
       </section>
     </>

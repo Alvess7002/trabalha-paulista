@@ -37,7 +37,16 @@ Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitaç
 - [x] Cadastro com validação e confirmação de senha
 - [x] Recuperação de senha (apenas demonstrativa)
 - [x] Área restrita com logoff e bloqueio sem autenticação
+- [x] Busca de vagas por cargo, categoria ou empresa (sem diferenciar acentos), com filtros de categoria e bairro
+- [x] Página de contato com formulário validado (envio simulado)
 - [x] Layout responsivo (desktop e celular)
+- [x] Modo acessibilidade (fontes maiores e mais contraste)
+- [x] Tradutor português/inglês
+- [x] Favoritos de vagas e cursos (página /favoritos)
+- [x] Notificações de novas vagas (sino + aviso do navegador opcional)
+- [x] Compartilhar vagas pelo WhatsApp
+- [x] Botão voltar ao topo
+- [x] Filtro por data de publicação (mais recentes primeiro)
 
 ## Tecnologias
 
@@ -64,10 +73,10 @@ npm run lint     # análise estática
 src/
 ├── components/   # Navbar, Footer, Layout, PageHero, InfoCard, FormField, ProtectedRoute, AuthActions
 ├── context/      # AuthProvider e contexto de autenticação
-├── data/         # Dados demonstrativos (vagas, cursos, negócios)
+├── data/         # Dados demonstrativos (vagas, cursos, negócios, assuntos de contato)
 ├── hooks/        # useAuth
 ├── pages/        # Páginas da aplicação
-└── utils/        # Validadores de formulário
+└── utils/        # Validadores de formulário e normalização de texto (busca)
 ```
 
 ## Limitações da versão atual
@@ -75,12 +84,13 @@ src/
 - Sem backend nem banco de dados; todos os conteúdos são fictícios.
 - A autenticação é **apenas demonstrativa**: usuários e sessão ficam no `localStorage`, com senha sem criptografia. Não oferece segurança real.
 - A recuperação de senha não envia e-mails.
-- Não há busca, filtros ou candidatura a vagas.
+- O formulário de contato apenas simula o envio: a mensagem não é enviada nem armazenada.
+- Não há candidatura a vagas.
 
 ## Melhorias planejadas (ainda não implementadas)
 
 - Backend e banco de dados com autenticação real.
 - Cadastro de vagas, cursos e negócios por usuários.
-- Busca e filtros por categoria e bairro.
+- Envio real do formulário de contato (Node.js + banco de dados).
 - Candidatura a vagas e perfil de usuário.
 - Testes automatizados.
