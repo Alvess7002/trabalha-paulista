@@ -6,6 +6,7 @@ import InfoCard from '../components/InfoCard'
 import FormField from '../components/FormField'
 import { jobs } from '../data/jobs'
 import { normalize } from '../utils/text'
+import { diasDesdePublicacao } from '../data/datasVagas'
 import { useIdioma } from '../idioma/useIdioma'
 
 const bairroOf = (job) => job.local.split(',')[0].trim()
@@ -19,7 +20,7 @@ const bairroOptions = [...new Set(jobs.map(bairroOf))]
   .sort(sortPt)
   .map((b) => ({ value: b, label: b }))
 
-const EMPTY_FILTERS = { search: '', categoria: '', bairro: '' }
+const EMPTY_FILTERS = { search: '', categoria: '', bairro: '', periodo: '', ordem: '' }
 
 export default function Jobs() {
   const { t, td } = useIdioma()
@@ -43,8 +44,29 @@ export default function Jobs() {
     const matchesBairro =
       !filters.bairro || bairroOf(job) === filters.bairro
 
-    return matchesSearch && matchesCategory && matchesBairro
+    const matchesPeriodo =
+      !filters.periodo || diasDesdePublicacao(job) <= Number(filters.periodo)
+
+    return matchesSearch && matchesCategory && matchesBairro && matchesPeriodo
   })
+
+  // Mais recentes primeiro (padrão); "antigas" inverte a ordem.
+  const sign = filters.ordem === 'antigas' ? -1 : 1
+  filteredJobs.sort((a, b) => sign * (diasDesdePublicacao(a) - diasDesdePublicacao(b)))
+
+  const postedText = (job) => {
+    const dias = diasDesdePublicacao(job)
+    if (dias === 0) return t('jobs.postedToday')
+    if (dias === 1) return t('jobs.postedYesterday')
+    return t('jobs.postedDays', { days: dias })
+  }
+
+  const periodOptions = [
+    { value: '1', label: t('jobs.period1') },
+    { value: '7', label: t('jobs.period7') },
+    { value: '30', label: t('jobs.period30') },
+  ]
+  const orderOptions = [{ value: 'antigas', label: t('jobs.orderOld') }]
 
   // Os valores dos filtros continuam em português (iguais aos dados); só o rótulo é traduzido.
   const translateOptions = (options) => options.map((o) => ({ ...o, label: td(o.label) }))
@@ -98,6 +120,26 @@ export default function Jobs() {
             value={filters.bairro}
             onChange={handleChange}
           />
+
+          <FormField
+            label={t('jobs.period')}
+            name="periodo"
+            as="select"
+            placeholder={t('jobs.periodAll')}
+            options={periodOptions}
+            value={filters.periodo}
+            onChange={handleChange}
+          />
+
+          <FormField
+            label={t('jobs.order')}
+            name="ordem"
+            as="select"
+            placeholder={t('jobs.orderRecent')}
+            options={orderOptions}
+            value={filters.ordem}
+            onChange={handleChange}
+          />
         </form>
 
         <div className="results-bar">
@@ -127,7 +169,7 @@ export default function Jobs() {
                 badge={td(job.tipo)}
                 title={td(job.cargo)}
                 subtitle={job.empresa}
-                meta={job.local}
+                meta={`${job.local} · ${postedText(job)}`}
                 metaIcon={MapPin}
                 description={td(job.descricao)}
               />
