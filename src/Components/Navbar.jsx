@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Briefcase, Menu, X } from 'lucide-react'
@@ -10,6 +11,7 @@ const links = [
   { to: '/capacitacao', label: 'Capacitação' },
   { to: '/empreendedorismo', label: 'Empreendedorismo' },
   { to: '/sobre', label: 'Sobre' },
+  { to: '/contato', label: 'Contato' },
 ]
 
 export default function Navbar() {
@@ -34,14 +36,19 @@ export default function Navbar() {
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        <nav className={`nav-menu ${open ? 'open' : ''}`} aria-label="Navegação principal">
+        <nav
+          className={`nav-menu ${open ? 'open' : ''}`}
+          aria-label="Navegação principal"
+        >
           <ul className="nav-links">
             {links.map((link) => (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
                   end={link.to === '/'}
-                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  className={({ isActive }) =>
+                    isActive ? 'active' : undefined
+                  }
                   onClick={close}
                 >
                   {link.label}
@@ -49,7 +56,8 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-                    <div className="nav-actions">
+
+          <div className="nav-actions">
             <ThemeToggle />
             <AuthActions onNavigate={close} />
           </div>
