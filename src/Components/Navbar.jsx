@@ -4,17 +4,20 @@ import { Link, NavLink } from 'react-router-dom'
 import { Briefcase, Menu, X } from 'lucide-react'
 import AuthActions from './AuthActions'
 import ThemeToggle from './ThemeToggle'
+import BotaoIdioma from './BotaoIdioma'
+import { useIdioma } from '../idioma/useIdioma'
 
 const links = [
-  { to: '/', label: 'Início' },
-  { to: '/vagas', label: 'Vagas' },
-  { to: '/capacitacao', label: 'Capacitação' },
-  { to: '/empreendedorismo', label: 'Empreendedorismo' },
-  { to: '/sobre', label: 'Sobre' },
-  { to: '/contato', label: 'Contato' },
+  { to: '/', labelKey: 'nav.home' },
+  { to: '/vagas', labelKey: 'nav.jobs' },
+  { to: '/capacitacao', labelKey: 'nav.courses' },
+  { to: '/empreendedorismo', labelKey: 'nav.business' },
+  { to: '/sobre', labelKey: 'nav.about' },
+  { to: '/contato', labelKey: 'nav.contact' },
 ]
 
 export default function Navbar() {
+  const { t } = useIdioma()
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
 
@@ -29,7 +32,7 @@ export default function Navbar() {
         <button
           type="button"
           className="nav-toggle"
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -38,7 +41,7 @@ export default function Navbar() {
 
         <nav
           className={`nav-menu ${open ? 'open' : ''}`}
-          aria-label="Navegação principal"
+          aria-label={t('nav.mainLabel')}
         >
           <ul className="nav-links">
             {links.map((link) => (
@@ -51,13 +54,14 @@ export default function Navbar() {
                   }
                   onClick={close}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </NavLink>
               </li>
             ))}
           </ul>
 
           <div className="nav-actions">
+            <BotaoIdioma />
             <ThemeToggle />
             <AuthActions onNavigate={close} />
           </div>

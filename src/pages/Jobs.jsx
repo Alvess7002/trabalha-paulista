@@ -6,6 +6,7 @@ import InfoCard from '../components/InfoCard'
 import FormField from '../components/FormField'
 import { jobs } from '../data/jobs'
 import { normalize } from '../utils/text'
+import { useIdioma } from '../idioma/useIdioma'
 
 const bairroOf = (job) => job.local.split(',')[0].trim()
 const sortPt = (a, b) => a.localeCompare(b, 'pt-BR')
@@ -21,6 +22,7 @@ const bairroOptions = [...new Set(jobs.map(bairroOf))]
 const EMPTY_FILTERS = { search: '', categoria: '', bairro: '' }
 
 export default function Jobs() {
+  const { t, td } = useIdioma()
   const [filters, setFilters] = useState(EMPTY_FILTERS)
 
   const handleChange = (e) =>
@@ -44,52 +46,55 @@ export default function Jobs() {
     return matchesSearch && matchesCategory && matchesBairro
   })
 
+  // Os valores dos filtros continuam em português (iguais aos dados); só o rótulo é traduzido.
+  const translateOptions = (options) => options.map((o) => ({ ...o, label: td(o.label) }))
+
   const hasFilters = Object.values(filters).some(Boolean)
   const count = filteredJobs.length
 
   return (
     <>
       <PageHero
-        title="Vagas de emprego"
-        subtitle="Oportunidades em Paulista e região."
+        title={t('jobs.title')}
+        subtitle={t('jobs.subtitle')}
       />
 
       <section className="container section">
         <p className="notice">
-          Vagas fictícias, criadas apenas para demonstração.
+          {t('jobs.notice')}
         </p>
 
         <form
           className="filters"
           role="search"
-          aria-label="Buscar vagas"
+          aria-label={t('jobs.searchLabel')}
           onSubmit={(e) => e.preventDefault()}
         >
           <FormField
-            label="Encontre sua oportunidade"
+            label={t('jobs.search')}
             name="search"
             type="search"
-            placeholder="Cargo, profissão ou empresa"
+            placeholder={t('jobs.searchPlaceholder')}
             value={filters.search}
             onChange={handleChange}
           />
 
           <FormField
-            label="Categoria"
+            label={t('jobs.category')}
             name="categoria"
             as="select"
-            placeholder="Todas as áreas"
-            options={categoryOptions}
+            placeholder={t('jobs.categoryAll')}
+            options={translateOptions(categoryOptions)}
             value={filters.categoria}
             onChange={handleChange}
           />
 
           <FormField
-            label="Localização"
+            label={t('jobs.location')}
             name="bairro"
             as="select"
-            placeholder="Todos os bairros"
-            options={bairroOptions}
+            placeholder={t('jobs.locationAll')}
+            options={translateOptions(bairroOptions)}
             value={filters.bairro}
             onChange={handleChange}
           />
@@ -98,8 +103,8 @@ export default function Jobs() {
         <div className="results-bar">
           <p className="muted" role="status" aria-live="polite">
             {count === 1
-              ? '1 vaga encontrada'
-              : `${count} vagas encontradas`}
+              ? t('jobs.countOne')
+              : t('jobs.countMany', { count })}
           </p>
 
           {hasFilters && (
@@ -108,7 +113,7 @@ export default function Jobs() {
               className="btn btn-outline btn-sm"
               onClick={() => setFilters(EMPTY_FILTERS)}
             >
-              Limpar filtros
+              {t('jobs.clear')}
             </button>
           )}
         </div>
@@ -119,21 +124,21 @@ export default function Jobs() {
               <InfoCard
                 key={job.id}
                 icon={Briefcase}
-                badge={job.tipo}
-                title={job.cargo}
+                badge={td(job.tipo)}
+                title={td(job.cargo)}
                 subtitle={job.empresa}
                 meta={job.local}
                 metaIcon={MapPin}
-                description={job.descricao}
+                description={td(job.descricao)}
               />
             ))}
           </div>
         ) : (
           <div className="empty-state">
             <SearchX size={40} aria-hidden="true" />
-            <h2>Nenhuma vaga encontrada</h2>
+            <h2>{t('jobs.emptyTitle')}</h2>
             <p className="muted">
-              Tente outro termo ou remova algum filtro.
+              {t('jobs.emptyText')}
             </p>
           </div>
         )}

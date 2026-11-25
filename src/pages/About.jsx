@@ -1,11 +1,7 @@
 import PageHero from '../components/PageHero'
+import { useIdioma } from '../idioma/useIdioma'
 
-const objectives = [
-  'Apresentar vagas de emprego de forma organizada.',
-  'Facilitar a descoberta de cursos de capacitação.',
-  'Dar visibilidade a pequenos empreendedores locais.',
-  'Centralizar informações hoje dispersas em várias plataformas.',
-]
+const objectiveKeys = ['about.obj1', 'about.obj2', 'about.obj3', 'about.obj4']
 
 const team = [
   'Giovanni Alves Bezerra da Silva',
@@ -15,34 +11,27 @@ const team = [
 ]
 
 export default function About() {
+  const { t } = useIdioma()
+
   return (
     <>
-      <PageHero title="Sobre o projeto" subtitle="Conheça a proposta do Trabalha Paulista." />
+      <PageHero title={t('about.title')} subtitle={t('about.subtitle')} />
       <section className="container section prose">
-        <h2>Proposta</h2>
-        <p>
-          O Trabalha Paulista é uma plataforma de empregabilidade, capacitação profissional e
-          empreendedorismo local em Paulista–PE. Ela nasce para resolver quatro problemas:
-          dificuldade de encontrar vagas, dificuldade de localizar cursos, dificuldade dos
-          pequenos empreendedores em divulgar seus negócios e informações espalhadas em
-          diferentes plataformas.
-        </p>
-        <h2>Objetivos</h2>
+        <h2>{t('about.proposalTitle')}</h2>
+        <p>{t('about.proposalText')}</p>
+        <h2>{t('about.objectivesTitle')}</h2>
         <ul>
-          {objectives.map((o) => (
-            <li key={o}>{o}</li>
+          {objectiveKeys.map((key) => (
+            <li key={key}>{t(key)}</li>
           ))}
         </ul>
-        <h2>Equipe</h2>
+        <h2>{t('about.teamTitle')}</h2>
         <ul>
           {team.map((n) => (
             <li key={n}>{n}</li>
           ))}
         </ul>
-        <p className="notice">
-          Esta é uma versão acadêmica e demonstrativa: os conteúdos são fictícios e não há
-          backend nem autenticação real.
-        </p>
+        <p className="notice">{t('about.notice')}</p>
       </section>
     </>
   )

@@ -1,68 +1,74 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Briefcase, GraduationCap, Store } from 'lucide-react'
 import InfoCard from '../components/InfoCard'
+import { useIdioma } from '../idioma/useIdioma'
 
 const sections = [
   {
     icon: Briefcase,
-    title: 'Oportunidades',
-    description: 'Encontre vagas de emprego em Paulista e região em um só lugar.',
+    titleKey: 'home.card1.title',
+    textKey: 'home.card1.text',
     to: '/vagas',
-    linkLabel: 'Ver vagas',
+    linkKey: 'home.card1.link',
   },
   {
     icon: GraduationCap,
-    title: 'Capacitação',
-    description: 'Descubra cursos e treinamentos para qualificar o seu currículo.',
+    titleKey: 'home.card2.title',
+    textKey: 'home.card2.text',
     to: '/capacitacao',
-    linkLabel: 'Ver cursos',
+    linkKey: 'home.card2.link',
   },
   {
     icon: Store,
-    title: 'Empreendedorismo',
-    description: 'Conheça e divulgue os pequenos negócios do município.',
+    titleKey: 'home.card3.title',
+    textKey: 'home.card3.text',
     to: '/empreendedorismo',
-    linkLabel: 'Ver negócios',
+    linkKey: 'home.card3.link',
   },
 ]
 
 export default function Home() {
+  const { t } = useIdioma()
   return (
     <>
       <section className="hero">
         <div className="container hero-inner">
           <div>
-            <span className="eyebrow">Paulista · PE</span>
-            <h1>Emprego, capacitação e empreendedorismo em um só lugar</h1>
-            <p>
-              O Trabalha Paulista reúne oportunidades, cursos e negócios locais para ajudar
-              você a dar o próximo passo na carreira.
-            </p>
+            <span className="eyebrow">{t('home.eyebrow')}</span>
+            <h1>{t('home.title')}</h1>
+            <p>{t('home.text')}</p>
             <div className="hero-actions">
               <Link to="/vagas" className="btn btn-light">
-                Explorar vagas <ArrowRight size={18} aria-hidden="true" />
+                {t('home.exploreJobs')} <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link to="/sobre" className="btn btn-outline-light">
-                Conhecer o projeto
+                {t('home.learnMore')}
               </Link>
             </div>
           </div>
           <div className="hero-panel" aria-hidden="true">
-            <div><Briefcase size={22} /> Oportunidades de emprego</div>
-            <div><GraduationCap size={22} /> Cursos de capacitação</div>
-            <div><Store size={22} /> Negócios locais</div>
+            <div><Briefcase size={22} /> {t('home.panelJobs')}</div>
+            <div><GraduationCap size={22} /> {t('home.panelCourses')}</div>
+            <div><Store size={22} /> {t('home.panelBusiness')}</div>
           </div>
         </div>
       </section>
 
       <section className="container section">
         <div className="section-head">
-          <h2>O que você encontra aqui</h2>
-          <p className="muted">Três caminhos para impulsionar a sua vida profissional.</p>
+          <h2>{t('home.sectionTitle')}</h2>
+          <p className="muted">{t('home.sectionSubtitle')}</p>
         </div>
         <div className="grid">
           {sections.map((s) => (
-            <InfoCard key={s.to} {...s} />
+            <InfoCard
+              key={s.to}
+              icon={s.icon}
+              title={t(s.titleKey)}
+              description={t(s.textKey)}
+              to={s.to}
+              linkLabel={t(s.linkKey)}
+            />
           ))}
         </div>
       </section>

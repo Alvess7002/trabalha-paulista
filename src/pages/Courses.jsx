@@ -2,17 +2,20 @@ import { Clock, GraduationCap } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import InfoCard from '../components/InfoCard'
 import { courses } from '../data/courses'
+import { useIdioma } from '../idioma/useIdioma'
 
 export default function Courses() {
+  const { t, td } = useIdioma()
+
   return (
     <>
-      <PageHero title="Capacitação profissional" subtitle="Cursos para qualificar a sua carreira." />
+      <PageHero title={t('courses.title')} subtitle={t('courses.subtitle')} />
       <section className="container section">
-        <p className="notice">Cursos fictícios, criados apenas para demonstração.</p>
+        <p className="notice">{t('courses.notice')}</p>
         <div className="grid">
           {courses.map((course) => (
-            <InfoCard key={course.id} icon={GraduationCap} badge={course.categoria} title={course.nome}
-              meta={course.duracao} metaIcon={Clock} description={course.descricao} />
+            <InfoCard key={course.id} icon={GraduationCap} badge={td(course.categoria)} title={td(course.nome)}
+              meta={td(course.duracao)} metaIcon={Clock} description={td(course.descricao)} />
           ))}
         </div>
       </section>
