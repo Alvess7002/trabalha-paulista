@@ -83,4 +83,11 @@ export const traducoesDados = {
     'Crochet pieces and decor inspired by the Pernambuco coast.',
   'Mercearia de bairro com produtos básicos e entrega no comércio local.':
     'Neighborhood grocery store with staple products and delivery within the local area.',
+
+  // Contato: assuntos
+  'Dúvida': 'Question',
+  'Sugestão': 'Suggestion',
+  'Problema no site': 'Website issue',
+  'Parceria': 'Partnership',
+  'Outro': 'Other',
 }

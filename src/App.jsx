@@ -6,6 +6,7 @@ import Jobs from './pages/Jobs'
 import Courses from './pages/Courses'
 import Business from './pages/Business'
 import About from './pages/About'
+import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="capacitacao" element={<Courses />} />
         <Route path="empreendedorismo" element={<Business />} />
         <Route path="sobre" element={<About />} />
+        <Route path="contato" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="cadastro" element={<Register />} />
         <Route path="esqueci-senha" element={<ForgotPassword />} />
