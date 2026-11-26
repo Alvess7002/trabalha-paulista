@@ -1,8 +1,8 @@
 import { Briefcase } from 'lucide-react'
-import { useFeatures } from '../hooks/useFeatures'
+import { useIdioma } from '../idioma/useIdioma'
 
 export default function Footer() {
-  const { t } = useFeatures()
+  const { t } = useIdioma()
   return (
     <footer className="footer">
       <div className="container footer-inner">

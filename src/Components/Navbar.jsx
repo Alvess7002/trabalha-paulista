@@ -1,22 +1,23 @@
+
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Briefcase, Menu, X } from 'lucide-react'
 import AuthActions from './AuthActions'
 import ThemeToggle from './ThemeToggle'
-import NavTools from './NavTools'
-import { useFeatures } from '../hooks/useFeatures'
+import BotaoIdioma from './BotaoIdioma'
+import { useIdioma } from '../idioma/useIdioma'
 
 const links = [
-  { to: '/', key: 'nav.home' },
-  { to: '/vagas', key: 'nav.jobs' },
-  { to: '/capacitacao', key: 'nav.courses' },
-  { to: '/empreendedorismo', key: 'nav.business' },
-  { to: '/sobre', key: 'nav.about' },
-  { to: '/contato', key: 'nav.contact' },
+  { to: '/', labelKey: 'nav.home' },
+  { to: '/vagas', labelKey: 'nav.jobs' },
+  { to: '/capacitacao', labelKey: 'nav.courses' },
+  { to: '/empreendedorismo', labelKey: 'nav.business' },
+  { to: '/sobre', labelKey: 'nav.about' },
+  { to: '/contato', labelKey: 'nav.contact' },
 ]
 
 export default function Navbar() {
-  const { t } = useFeatures()
+  const { t } = useIdioma()
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
 
@@ -31,30 +32,36 @@ export default function Navbar() {
         <button
           type="button"
           className="nav-toggle"
-          aria-label={open ? t('nav.close') : t('nav.open')}
+          aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        <nav className={`nav-menu ${open ? 'open' : ''}`} aria-label={t('nav.main')}>
+        <nav
+          className={`nav-menu ${open ? 'open' : ''}`}
+          aria-label={t('nav.mainLabel')}
+        >
           <ul className="nav-links">
             {links.map((link) => (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
                   end={link.to === '/'}
-                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  className={({ isActive }) =>
+                    isActive ? 'active' : undefined
+                  }
                   onClick={close}
                 >
-                  {t(link.key)}
+                  {t(link.labelKey)}
                 </NavLink>
               </li>
             ))}
           </ul>
-                    <div className="nav-actions">
-            <NavTools onNavigate={close} />
+
+          <div className="nav-actions">
+            <BotaoIdioma />
             <ThemeToggle />
             <AuthActions onNavigate={close} />
           </div>

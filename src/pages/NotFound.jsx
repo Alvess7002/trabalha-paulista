@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
-import { useFeatures } from '../hooks/useFeatures'
+import { useIdioma } from '../idioma/useIdioma'
 
 export default function NotFound() {
-  const { t } = useFeatures()
+  const { t } = useIdioma()
+
   return (
     <>
-      <PageHero title={t('nf.title')} subtitle={t('nf.subtitle')} />
+      <PageHero title={t('notFound.title')} subtitle={t('notFound.subtitle')} />
       <section className="container section">
-        <Link to="/" className="btn btn-primary">{t('nf.back')}</Link>
+        <Link to="/" className="btn btn-primary">{t('notFound.back')}</Link>
       </section>
     </>
   )
