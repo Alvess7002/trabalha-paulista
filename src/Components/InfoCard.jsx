@@ -11,6 +11,7 @@ export default function InfoCard({
   description,
   to,
   linkLabel,
+  footer,
 }) {
   return (
     <article className="card">
@@ -33,6 +34,7 @@ export default function InfoCard({
           {linkLabel} <ArrowRight size={16} aria-hidden="true" />
         </Link>
       )}
+      {footer && <div className="card-footer">{footer}</div>}
     </article>
   )
 }

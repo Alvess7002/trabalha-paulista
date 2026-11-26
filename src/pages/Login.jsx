@@ -46,7 +46,7 @@ export default function Login() {
         <h1>{t('login.title')}</h1>
         <p className="muted">{t('login.subtitle')}</p>
 
-        {notice && !feedback && <div className="alert alert-info" role="status">{notice}</div>}
+        {notice && !feedback && <div className="alert alert-info" role="status">{t(notice)}</div>}
         {feedback && (
           <div className={`alert alert-${feedback.type}`} role="status">{feedbackText}</div>
         )}

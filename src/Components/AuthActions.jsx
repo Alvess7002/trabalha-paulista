@@ -5,6 +5,7 @@ import { useIdioma } from '../idioma/useIdioma'
 
 export default function AuthActions({ onNavigate }) {
   const { user, logout } = useAuth()
+  const { t } = useFeatures()
   const navigate = useNavigate()
   const { t } = useIdioma()
 

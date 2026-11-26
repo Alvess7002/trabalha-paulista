@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Briefcase, GraduationCap, LogOut, Store } from 'lucide-react'
 import InfoCard from '../components/InfoCard'
+import { useFeatures } from '../hooks/useFeatures'
 import { useAuth } from '../hooks/useAuth'
 import { useIdioma } from '../idioma/useIdioma'
 
