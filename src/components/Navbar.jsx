@@ -25,8 +25,8 @@ export default function Navbar() {
     <header className="navbar">
       <div className="container navbar-inner">
         <Link to="/" className="brand" onClick={close}>
-          <Briefcase size={24} aria-hidden="true" />
-          <span>Trabalha</span> Paulista
+          <span className="brand-mark"><Briefcase size={22} aria-hidden="true" /></span>
+          <span className="brand-name"><strong>Trabalha</strong> Paulista</span>
         </Link>
 
         <button
@@ -34,16 +34,18 @@ export default function Navbar() {
           className="nav-toggle"
           aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
           aria-expanded={open}
+          aria-controls="menu-principal"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
 
         <nav
+          id="menu-principal"
           className={`nav-menu ${open ? 'open' : ''}`}
           aria-label={t('nav.mainLabel')}
         >
-          <ul className="nav-links">
+          <ul className="nav-links" aria-label={t('nav.mainLabel')}>
             {links.map((link) => (
               <li key={link.to}>
                 <NavLink
