@@ -14,6 +14,7 @@ export default function FormField({
   autoComplete,
   placeholder,
   options = [],
+  suggestions,
   maxLength,
 }) {
   const id = useId()
@@ -54,6 +55,8 @@ export default function FormField({
         type={isPassword && visible ? 'text' : type}
         autoComplete={autoComplete}
         placeholder={placeholder}
+        maxLength={maxLength}
+        list={suggestions ? `${id}-list` : undefined}
       />
     )
   }
@@ -63,6 +66,13 @@ export default function FormField({
       <label htmlFor={id}>{label}</label>
       <div className="input-wrap">
         {control}
+        {suggestions && (
+          <datalist id={`${id}-list`}>
+            {suggestions.map((s) => (
+              <option key={s} value={s} />
+            ))}
+          </datalist>
+        )}
         {isPassword && (
           <button
             type="button"

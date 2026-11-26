@@ -43,6 +43,7 @@ Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitaç
 - [x] Painel de Acessibilidade
 - [x] Tradução para Língua Inglesa
 - [x] Pesquisa por Data 
+- [x] Painel administrativo: cadastrar, editar e excluir vagas, cursos e negócios, com etapa de revisão (dados + pré-visualização) antes de publicar e opção de rascunho
 - [x] Candidatura às vagas: botão de candidatar-se, vínculo com o usuário logado, data registrada e acompanhamento do status (enviada, em análise ou encerrada) na área restrita
 
 
@@ -69,25 +70,31 @@ npm run lint     # análise estática
 
 ```
 src/
-├── components/   # Navbar, Footer, Layout, PageHero, InfoCard, FormField, ProtectedRoute, AuthActions
-├── context/      # AuthProvider (autenticação) e CandidaturasProvider (candidaturas)
-├── data/         # Dados demonstrativos (vagas, cursos, negócios)
-├── hooks/        # useAuth, useCandidaturas
+├── admin/        # Configuração dos tipos de conteúdo e gerenciador (lista → formulário → revisão)
+├── components/   # Navbar, Footer, Layout, PageHero, InfoCard, FormField, ProtectedRoute, AdminRoute, AuthActions
+├── context/      # AuthProvider (autenticação), CandidaturasProvider e CatalogoProvider (vagas, cursos e negócios)
+├── data/         # Dados de exemplo (vagas, cursos, negócios) e lista de e-mails administradores
+├── hooks/        # useAuth, useCandidaturas, useCatalogo
 ├── pages/        # Páginas da aplicação
 └── utils/        # Validadores de formulário
 ```
+
+## Painel administrativo
+
+Acesse em `/admin` (também pelo botão "Abrir painel" na área restrita). Para ter acesso, **cadastre-se com o e-mail `admin@trabalhapaulista.com`** (lista em `src/data/admin.js`). Cada vaga, curso ou negócio passa por três etapas: formulário → revisão → publicar ou salvar como rascunho. Só itens **publicados** aparecem nas páginas públicas.
 
 ## Limitações da versão atual
 
 - Sem backend nem banco de dados; todos os conteúdos são fictícios.
 - A autenticação é **apenas demonstrativa**: usuários e sessão ficam no `localStorage`, com senha sem criptografia. Não oferece segurança real.
 - A recuperação de senha não envia e-mails.
+- O painel administrativo é **demonstrativo**: o acesso é decidido no navegador pelo e-mail, e o catálogo editado fica no `localStorage` (qualquer pessoa com acesso ao navegador poderia alterá-lo). Textos cadastrados no painel não têm tradução para o inglês.
 - As candidaturas também ficam no `localStorage` (vinculadas ao e-mail do usuário). O andamento do status é **simulado** pelo botão "Simular andamento" na área restrita; sem backend, nenhuma empresa recebe a candidatura de fato.
 
 ## Melhorias planejadas (ainda não implementadas)
 
 - Backend e banco de dados com autenticação real.
-- Cadastro de vagas, cursos e negócios por usuários.
+- Cadastro de vagas, cursos e negócios pelos próprios empregadores/empreendedores (hoje apenas pelo administrador) e papéis de acesso validados no servidor.
 - Busca e filtros por categoria e bairro.
 - Perfil de usuário e envio real das candidaturas às empresas, com atualização de status por elas.
 - Testes automatizados.

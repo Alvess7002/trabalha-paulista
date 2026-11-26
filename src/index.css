@@ -254,6 +254,48 @@ ul { padding-left: 1.2rem; }
 .applications-empty { margin-bottom: 4rem; }
 .applications-empty .btn { margin-top: 1rem; }
 
+/* Painel administrativo */
+.status-ok { background: var(--ok-bg); color: var(--ok); }
+.btn-danger { background: var(--danger); color: var(--surface); }
+.btn-danger:hover { box-shadow: var(--shadow-sm); }
+.btn-outline-danger { border-color: var(--danger); color: var(--danger); }
+.btn-outline-danger:hover { background: var(--danger-bg); }
+.admin-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; padding: 1.25rem 1.5rem; margin-bottom: 3rem; border: 1px solid var(--tint-line); border-radius: var(--radius-lg); background: var(--tint); }
+.admin-banner > svg { flex-shrink: 0; color: var(--primary); }
+.admin-banner > div { flex: 1 1 260px; min-width: 0; }
+.admin-banner h2 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.admin-banner p { margin: 0; color: var(--muted); }
+.admin-back { margin-bottom: 1rem; }
+.admin-tabs { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
+.admin-tab { padding: 0.8rem 1.15rem; background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; font: inherit; font-weight: 800; color: var(--muted); cursor: pointer; }
+.admin-tab:hover { color: var(--ink); }
+.admin-tab[aria-selected="true"] { color: var(--primary); border-bottom-color: var(--primary); }
+.admin-tab:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 8px; }
+.admin-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.admin-toolbar p { margin: 0; }
+.admin-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+.admin-item { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; padding: 1rem 1.25rem; background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+.admin-item-main { flex: 1 1 240px; min-width: 0; }
+.admin-item-main h3 { font-size: 1.05rem; margin-bottom: 0.15rem; overflow-wrap: anywhere; }
+.admin-item-main p { margin: 0; font-size: 0.92rem; }
+.admin-item-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.admin-confirm { flex: 1 1 100%; padding: 0.85rem 1rem; border-radius: 12px; background: var(--danger-bg); color: var(--ink); }
+.admin-confirm p { margin: 0 0 0.6rem; font-weight: 700; overflow-wrap: anywhere; }
+.admin-form, .admin-review { max-width: 760px; }
+.admin-review { max-width: none; }
+.admin-form h2, .admin-review h2 { margin-bottom: 0.35rem; }
+.admin-form > .muted, .admin-review > .muted { margin-bottom: 1.5rem; }
+.admin-form textarea { min-height: 120px; }
+.admin-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; }
+.review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: start; }
+.review-grid h3 { font-size: 1.05rem; margin-bottom: 0.75rem; }
+.review-list { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-raised); overflow: hidden; }
+.review-row { padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); }
+.review-row:last-child { border-bottom: 0; }
+.review-row dt { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.review-row dd { margin: 0.15rem 0 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.admin-reset { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+
 @media (max-width: 980px) {
   .nav-toggle { display: inline-flex; }
   .nav-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 1.1rem; padding: 1rem 4% 1.25rem; border-bottom: 1px solid var(--line); background: var(--nav-bg); box-shadow: var(--shadow); }
@@ -281,6 +323,8 @@ ul { padding-left: 1.2rem; }
   .dashboard-head .btn { width: 100%; }
   .dashboard-welcome { margin-bottom: 3rem; }
   .application-side, .application-side .btn { width: 100%; }
+  .admin-actions .btn, .admin-item-actions .btn, .admin-toolbar .btn { width: 100%; }
+  .admin-item-actions { width: 100%; }
   .applications, .applications-empty { margin-bottom: 3rem; }
   .dashboard-welcome > svg { display: none; }
   .filters { padding: 1rem; }
