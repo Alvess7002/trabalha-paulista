@@ -38,6 +38,12 @@ Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitaç
 - [x] Recuperação de senha (apenas demonstrativa)
 - [x] Área restrita com logoff e bloqueio sem autenticação
 - [x] Layout responsivo (desktop e celular)
+- [x] Barra de Busca 
+- [x] Tela de Contato
+- [x] Painel de Acessibilidade
+- [x] Tradução para Língua Inglesa
+- [x] Pesquisa por Data 
+
 
 ## Tecnologias
 
