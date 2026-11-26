@@ -6,6 +6,11 @@ export const traducoesDados = {
   // Vagas: tipo
   'Estágio': 'Internship',
   'Temporário': 'Temporary',
+  'Aprendiz': 'Apprentice',
+
+  // Cursos: modalidade (opções do painel administrativo)
+  'Presencial': 'In person',
+  'Híbrido': 'Hybrid',
 
   // Vagas: cargo
   'Auxiliar Administrativo': 'Administrative Assistant',

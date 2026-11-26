@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
 import Home from './pages/Home'
 import Jobs from './pages/Jobs'
 import Courses from './pages/Courses'
@@ -11,6 +12,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import Dashboard from './pages/Dashboard'
+import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -32,6 +34,14 @@ export default function App() {
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
           }
         />
         <Route path="*" element={<NotFound />} />

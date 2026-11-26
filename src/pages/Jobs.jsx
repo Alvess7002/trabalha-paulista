@@ -1,27 +1,19 @@
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Briefcase, CheckCircle2, MapPin, SearchX, Send } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import InfoCard from '../components/InfoCard'
 import FormField from '../components/FormField'
-import { jobs } from '../data/jobs'
 import { normalize, formatarData } from '../utils/text'
 import { diasDesdePublicacao } from '../data/datasVagas'
 import { useIdioma } from '../idioma/useIdioma'
 import { useAuth } from '../hooks/useAuth'
 import { useCandidaturas } from '../hooks/useCandidaturas'
+import { useCatalogo } from '../hooks/useCatalogo'
 
 const bairroOf = (job) => job.local.split(',')[0].trim()
 const sortPt = (a, b) => a.localeCompare(b, 'pt-BR')
-
-const categoryOptions = [...new Set(jobs.map((j) => j.categoria))]
-  .sort(sortPt)
-  .map((c) => ({ value: c, label: c }))
-
-const bairroOptions = [...new Set(jobs.map(bairroOf))]
-  .sort(sortPt)
-  .map((b) => ({ value: b, label: b }))
 
 const EMPTY_FILTERS = { search: '', categoria: '', bairro: '', periodo: '', ordem: '' }
 
@@ -29,6 +21,16 @@ export default function Jobs() {
   const { t, td, idioma } = useIdioma()
   const { user } = useAuth()
   const { getCandidatura, candidatar } = useCandidaturas()
+  // Só as vagas publicadas (as cadastradas no painel administrativo entram aqui).
+  const jobs = useCatalogo().publicados.jobs
+  const categoryOptions = useMemo(
+    () => [...new Set(jobs.map((j) => j.categoria))].sort(sortPt).map((c) => ({ value: c, label: c })),
+    [jobs],
+  )
+  const bairroOptions = useMemo(
+    () => [...new Set(jobs.map(bairroOf))].sort(sortPt).map((b) => ({ value: b, label: b })),
+    [jobs],
+  )
   const navigate = useNavigate()
   const location = useLocation()
   const [filters, setFilters] = useState(EMPTY_FILTERS)

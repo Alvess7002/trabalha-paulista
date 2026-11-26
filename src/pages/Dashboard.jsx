@@ -1,10 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowUpRight, Briefcase, CalendarDays, FastForward, GraduationCap, LogOut, MapPin, Store } from 'lucide-react'
+import { ArrowUpRight, Briefcase, ShieldCheck, CalendarDays, FastForward, GraduationCap, LogOut, MapPin, Store } from 'lucide-react'
 import InfoCard from '../components/InfoCard'
 import { useAuth } from '../hooks/useAuth'
 import { useCandidaturas } from '../hooks/useCandidaturas'
+import { useCatalogo } from '../hooks/useCatalogo'
 import { useIdioma } from '../idioma/useIdioma'
-import { jobs } from '../data/jobs'
 import { infoStatus, proximoStatus } from '../data/statusCandidatura'
 import { formatarData } from '../utils/text'
 
@@ -12,6 +12,8 @@ export default function Dashboard() {
   const { user, logout } = useAuth()
   const { t, td, idioma } = useIdioma()
   const { candidaturas, avancarStatus } = useCandidaturas()
+  // Todas as vagas (inclusive rascunhos), para o histórico de candidaturas não perder o cargo.
+  const { jobs } = useCatalogo()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -40,6 +42,17 @@ export default function Dashboard() {
         </div>
         <ArrowUpRight size={28} aria-hidden="true" />
       </div>
+
+      {user.admin && (
+        <div className="admin-banner">
+          <ShieldCheck size={28} aria-hidden="true" />
+          <div>
+            <h2>{t('dash.adminTitle')}</h2>
+            <p>{t('dash.adminText')}</p>
+          </div>
+          <Link to="/admin" className="btn btn-primary">{t('dash.adminLink')}</Link>
+        </div>
+      )}
 
       <div className="section-head dashboard-section-head">
         <div>
