@@ -160,6 +160,7 @@ export const traducoes = {
     'fav.viewCourses': 'Ver cursos',
     'fav.emptyTitle': 'Você ainda não tem favoritos',
     'fav.emptyText': 'Toque no coração das vagas e dos cursos para guardá-los aqui.',
+    'topo.voltar': 'Voltar ao topo',
 
     // Cursos
     'courses.title': 'Capacitação profissional',
@@ -494,6 +495,7 @@ export const traducoes = {
     'fav.viewCourses': 'See courses',
     'fav.emptyTitle': 'You have no favorites yet',
     'fav.emptyText': 'Tap the heart on jobs and courses to keep them here.',
+    'topo.voltar': 'Back to top',
 
     'courses.title': 'Professional training',
     'courses.subtitle': 'Courses to strengthen your career.',

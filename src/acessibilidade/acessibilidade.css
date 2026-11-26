@@ -172,4 +172,4 @@ html[data-a11y-contraste] :is(.notice, .alert) { background: var(--bg); color: v
 html[data-a11y-contraste] .badge { border: 2px solid var(--ink); background: var(--bg); color: var(--ink); }
 html[data-a11y-contraste] .nav-links a.active { background: var(--primary); color: var(--on-primary); }
 html[data-a11y-contraste] .input-wrap :is(input, select, textarea) { border: 2px solid var(--ink); }
-html[data-a11y-contraste] .acess-botao { border-color: var(--ink); }
+html[data-a11y-contraste] :is(.acess-botao, .botao-topo) { border-color: var(--ink); }
