@@ -3,24 +3,21 @@ import PageHero from '../components/PageHero'
 import InfoCard from '../components/InfoCard'
 import FavoriteButton from '../components/FavoriteButton'
 import { courses } from '../data/courses'
-import { useFeatures } from '../hooks/useFeatures'
+import { useIdioma } from '../idioma/useIdioma'
 
 export default function Courses() {
-  const { t, tr, label } = useFeatures()
+  const { t, td } = useIdioma()
+
   return (
     <>
       <PageHero title={t('courses.title')} subtitle={t('courses.subtitle')} />
       <section className="container section">
         <p className="notice">{t('courses.notice')}</p>
         <div className="grid">
-          {courses.map((raw) => {
-            const course = tr('courses', raw)
-            return (
-              <InfoCard key={course.id} icon={GraduationCap} badge={label('categoria', course.categoria)}
-                title={course.nome} meta={course.duracao} metaIcon={Clock} description={course.descricao}
-                footer={<FavoriteButton type="courses" id={course.id} />} />
-            )
-          })}
+          {courses.map((course) => (
+            <InfoCard key={course.id} icon={GraduationCap} badge={td(course.categoria)} title={td(course.nome)}
+              meta={td(course.duracao)} metaIcon={Clock} description={td(course.descricao)} />
+          ))}
         </div>
       </section>
     </>

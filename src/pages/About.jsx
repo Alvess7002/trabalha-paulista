@@ -1,7 +1,7 @@
 import PageHero from '../components/PageHero'
-import { useFeatures } from '../hooks/useFeatures'
+import { useIdioma } from '../idioma/useIdioma'
 
-const objectives = ['about.g1', 'about.g2', 'about.g3', 'about.g4']
+const objectiveKeys = ['about.obj1', 'about.obj2', 'about.obj3', 'about.obj4']
 
 const team = [
   'Giovanni Alves Bezerra da Silva',
@@ -11,30 +11,27 @@ const team = [
 ]
 
 export default function About() {
-  const { t } = useFeatures()
+  const { t } = useIdioma()
+
   return (
     <>
       <PageHero title={t('about.title')} subtitle={t('about.subtitle')} />
       <section className="container section prose">
-        <h2>{t('about.h.proposal')}</h2>
-        <p>
-          {t('about.proposal')}
-        </p>
-        <h2>{t('about.h.goals')}</h2>
+        <h2>{t('about.proposalTitle')}</h2>
+        <p>{t('about.proposalText')}</p>
+        <h2>{t('about.objectivesTitle')}</h2>
         <ul>
-          {objectives.map((o) => (
-            <li key={o}>{t(o)}</li>
+          {objectiveKeys.map((key) => (
+            <li key={key}>{t(key)}</li>
           ))}
         </ul>
-        <h2>{t('about.h.team')}</h2>
+        <h2>{t('about.teamTitle')}</h2>
         <ul>
           {team.map((n) => (
             <li key={n}>{n}</li>
           ))}
         </ul>
-        <p className="notice">
-          {t('about.notice')}
-        </p>
+        <p className="notice">{t('about.notice')}</p>
       </section>
     </>
   )

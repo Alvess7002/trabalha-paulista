@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { Briefcase, MapPin, SearchX } from 'lucide-react'
 import PageHero from '../components/PageHero'
@@ -5,6 +6,8 @@ import InfoCard from '../components/InfoCard'
 import FormField from '../components/FormField'
 import { jobs } from '../data/jobs'
 import { normalize } from '../utils/text'
+import { diasDesdePublicacao } from '../data/datasVagas'
+import { useIdioma } from '../idioma/useIdioma'
 
 const bairroOf = (job) => job.local.split(',')[0].trim()
 const sortPt = (a, b) => a.localeCompare(b, 'pt-BR')
@@ -17,49 +20,142 @@ const bairroOptions = [...new Set(jobs.map(bairroOf))]
   .sort(sortPt)
   .map((b) => ({ value: b, label: b }))
 
-const EMPTY_FILTERS = { search: '', categoria: '', bairro: '' }
+const EMPTY_FILTERS = { search: '', categoria: '', bairro: '', periodo: '', ordem: '' }
 
 export default function Jobs() {
+  const { t, td } = useIdioma()
   const [filters, setFilters] = useState(EMPTY_FILTERS)
 
-  const handleChange = (e) => setFilters({ ...filters, [e.target.name]: e.target.value })
+  const handleChange = (e) =>
+    setFilters({ ...filters, [e.target.name]: e.target.value })
 
   const query = normalize(filters.search)
+
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
       !query ||
-      [job.cargo, job.categoria, job.empresa].some((field) => normalize(field).includes(query))
-    const matchesCategory = !filters.categoria || job.categoria === filters.categoria
-    const matchesBairro = !filters.bairro || bairroOf(job) === filters.bairro
-    return matchesSearch && matchesCategory && matchesBairro
+      [job.cargo, job.categoria, job.empresa].some(
+        (field) => normalize(field).includes(query)
+      )
+
+    const matchesCategory =
+      !filters.categoria || job.categoria === filters.categoria
+
+    const matchesBairro =
+      !filters.bairro || bairroOf(job) === filters.bairro
+
+    const matchesPeriodo =
+      !filters.periodo || diasDesdePublicacao(job) <= Number(filters.periodo)
+
+    return matchesSearch && matchesCategory && matchesBairro && matchesPeriodo
   })
+
+  // Mais recentes primeiro (padrão); "antigas" inverte a ordem.
+  const sign = filters.ordem === 'antigas' ? -1 : 1
+  filteredJobs.sort((a, b) => sign * (diasDesdePublicacao(a) - diasDesdePublicacao(b)))
+
+  const postedText = (job) => {
+    const dias = diasDesdePublicacao(job)
+    if (dias === 0) return t('jobs.postedToday')
+    if (dias === 1) return t('jobs.postedYesterday')
+    return t('jobs.postedDays', { days: dias })
+  }
+
+  const periodOptions = [
+    { value: '1', label: t('jobs.period1') },
+    { value: '7', label: t('jobs.period7') },
+    { value: '30', label: t('jobs.period30') },
+  ]
+  const orderOptions = [{ value: 'antigas', label: t('jobs.orderOld') }]
+
+  // Os valores dos filtros continuam em português (iguais aos dados); só o rótulo é traduzido.
+  const translateOptions = (options) => options.map((o) => ({ ...o, label: td(o.label) }))
 
   const hasFilters = Object.values(filters).some(Boolean)
   const count = filteredJobs.length
 
   return (
     <>
-      <PageHero title="Vagas de emprego" subtitle="Oportunidades em Paulista e região." />
-      <section className="container section">
-        <p className="notice">Vagas fictícias, criadas apenas para demonstração.</p>
+      <PageHero
+        title={t('jobs.title')}
+        subtitle={t('jobs.subtitle')}
+      />
 
-        <form className="filters" role="search" aria-label="Buscar vagas" onSubmit={(e) => e.preventDefault()}>
-          <FormField label="Encontre sua oportunidade" name="search" type="search"
-            placeholder="Cargo, profissão ou empresa"
-            value={filters.search} onChange={handleChange} />
-          <FormField label="Categoria" name="categoria" as="select" placeholder="Todas as áreas"
-            options={categoryOptions} value={filters.categoria} onChange={handleChange} />
-          <FormField label="Localização" name="bairro" as="select" placeholder="Todos os bairros"
-            options={bairroOptions} value={filters.bairro} onChange={handleChange} />
+      <section className="container section">
+        <p className="notice">
+          {t('jobs.notice')}
+        </p>
+
+        <form
+          className="filters"
+          role="search"
+          aria-label={t('jobs.searchLabel')}
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <FormField
+            label={t('jobs.search')}
+            name="search"
+            type="search"
+            placeholder={t('jobs.searchPlaceholder')}
+            value={filters.search}
+            onChange={handleChange}
+          />
+
+          <FormField
+            label={t('jobs.category')}
+            name="categoria"
+            as="select"
+            placeholder={t('jobs.categoryAll')}
+            options={translateOptions(categoryOptions)}
+            value={filters.categoria}
+            onChange={handleChange}
+          />
+
+          <FormField
+            label={t('jobs.location')}
+            name="bairro"
+            as="select"
+            placeholder={t('jobs.locationAll')}
+            options={translateOptions(bairroOptions)}
+            value={filters.bairro}
+            onChange={handleChange}
+          />
+
+          <FormField
+            label={t('jobs.period')}
+            name="periodo"
+            as="select"
+            placeholder={t('jobs.periodAll')}
+            options={periodOptions}
+            value={filters.periodo}
+            onChange={handleChange}
+          />
+
+          <FormField
+            label={t('jobs.order')}
+            name="ordem"
+            as="select"
+            placeholder={t('jobs.orderRecent')}
+            options={orderOptions}
+            value={filters.ordem}
+            onChange={handleChange}
+          />
         </form>
 
         <div className="results-bar">
           <p className="muted" role="status" aria-live="polite">
-            {count === 1 ? '1 vaga encontrada' : `${count} vagas encontradas`}
+            {count === 1
+              ? t('jobs.countOne')
+              : t('jobs.countMany', { count })}
           </p>
+
           {hasFilters && (
-            <button type="button" className="btn btn-outline btn-sm" onClick={() => setFilters(EMPTY_FILTERS)}>
-              Limpar filtros
+            <button
+              type="button"
+              className="btn btn-outline btn-sm"
+              onClick={() => setFilters(EMPTY_FILTERS)}
+            >
+              {t('jobs.clear')}
             </button>
           )}
         </div>
@@ -67,15 +163,25 @@ export default function Jobs() {
         {count > 0 ? (
           <div className="grid">
             {filteredJobs.map((job) => (
-              <InfoCard key={job.id} icon={Briefcase} badge={job.tipo} title={job.cargo}
-                subtitle={job.empresa} meta={job.local} metaIcon={MapPin} description={job.descricao} />
+              <InfoCard
+                key={job.id}
+                icon={Briefcase}
+                badge={td(job.tipo)}
+                title={td(job.cargo)}
+                subtitle={job.empresa}
+                meta={`${job.local} · ${postedText(job)}`}
+                metaIcon={MapPin}
+                description={td(job.descricao)}
+              />
             ))}
           </div>
         ) : (
           <div className="empty-state">
             <SearchX size={40} aria-hidden="true" />
-            <h2>Nenhuma vaga encontrada</h2>
-            <p className="muted">Tente outro termo ou remova algum filtro.</p>
+            <h2>{t('jobs.emptyTitle')}</h2>
+            <p className="muted">
+              {t('jobs.emptyText')}
+            </p>
           </div>
         )}
       </section>

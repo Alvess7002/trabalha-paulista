@@ -3,17 +3,17 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthProvider.jsx'
-import { AppFeaturesProvider } from './context/AppFeaturesProvider.jsx'
+import { ProvedorIdioma } from './idioma/ProvedorIdioma.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AppFeaturesProvider>
+      <ProvedorIdioma>
         <AuthProvider>
           <App />
         </AuthProvider>
-      </AppFeaturesProvider>
+      </ProvedorIdioma>
     </BrowserRouter>
   </StrictMode>,
 )
