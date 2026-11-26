@@ -12,6 +12,7 @@ export default function InfoCard({
   to,
   linkLabel,
   footer,
+  titleAction,
   className = '',
 }) {
   return (
@@ -24,6 +25,7 @@ export default function InfoCard({
       {badge && <span className="badge">{badge}</span>}
       <div className="card-title-row">
         <h3>{title}</h3>
+        {titleAction}
       </div>
       {subtitle && <p className="card-subtitle">{subtitle}</p>}
       {meta && (

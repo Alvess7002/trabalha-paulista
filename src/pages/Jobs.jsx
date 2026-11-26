@@ -1,26 +1,29 @@
 
 import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Briefcase, CheckCircle2, MapPin, SearchX, Send } from 'lucide-react'
+import { Briefcase, CheckCircle2, Heart, MapPin, SearchX, Send } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import InfoCard from '../components/InfoCard'
 import FormField from '../components/FormField'
+import BotaoFavorito from '../components/BotaoFavorito'
 import { normalize, formatarData } from '../utils/text'
 import { diasDesdePublicacao } from '../data/datasVagas'
 import { useIdioma } from '../idioma/useIdioma'
 import { useAuth } from '../hooks/useAuth'
 import { useCandidaturas } from '../hooks/useCandidaturas'
 import { useCatalogo } from '../hooks/useCatalogo'
+import { useFavoritos } from '../hooks/useFavoritos'
 
 const bairroOf = (job) => job.local.split(',')[0].trim()
 const sortPt = (a, b) => a.localeCompare(b, 'pt-BR')
 
-const EMPTY_FILTERS = { search: '', categoria: '', bairro: '', periodo: '', ordem: '' }
+const EMPTY_FILTERS = { search: '', categoria: '', bairro: '', periodo: '', ordem: '', favoritas: '' }
 
 export default function Jobs() {
   const { t, td, idioma } = useIdioma()
   const { user } = useAuth()
   const { getCandidatura, candidatar } = useCandidaturas()
+  const { ehFavorito } = useFavoritos()
   // Só as vagas publicadas (as cadastradas no painel administrativo entram aqui).
   const jobs = useCatalogo().publicados.jobs
   const categoryOptions = useMemo(
@@ -70,7 +73,9 @@ export default function Jobs() {
     const matchesPeriodo =
       !filters.periodo || diasDesdePublicacao(job) <= Number(filters.periodo)
 
-    return matchesSearch && matchesCategory && matchesBairro && matchesPeriodo
+    const matchesFavoritas = !filters.favoritas || ehFavorito('job', job.id)
+
+    return matchesSearch && matchesCategory && matchesBairro && matchesPeriodo && matchesFavoritas
   })
 
   // Mais recentes primeiro (padrão); "antigas" inverte a ordem.
@@ -172,15 +177,27 @@ export default function Jobs() {
               : t('jobs.countMany', { count })}
           </p>
 
-          {hasFilters && (
-            <button
-              type="button"
-              className="btn btn-outline btn-sm"
-              onClick={() => setFilters(EMPTY_FILTERS)}
-            >
-              {t('jobs.clear')}
-            </button>
-          )}
+          <div className="results-actions">
+            {user && (
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                aria-pressed={Boolean(filters.favoritas)}
+                onClick={() => setFilters({ ...filters, favoritas: filters.favoritas ? '' : '1' })}
+              >
+                <Heart size={16} aria-hidden="true" /> {t('fav.onlySaved')}
+              </button>
+            )}
+            {hasFilters && (
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                onClick={() => setFilters(EMPTY_FILTERS)}
+              >
+                {t('jobs.clear')}
+              </button>
+            )}
+          </div>
         </div>
 
         {appliedCargo && (
@@ -204,6 +221,7 @@ export default function Jobs() {
                 meta={`${job.local} · ${postedText(job)}`}
                 metaIcon={MapPin}
                 description={td(job.descricao)}
+                titleAction={<BotaoFavorito tipo="job" id={job.id} nome={td(job.cargo)} />}
                 footer={
                   candidatura ? (
                     <>

@@ -44,6 +44,7 @@ Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitaç
 - [x] Tradução para Língua Inglesa
 - [x] Pesquisa por Data 
 - [x] Painel administrativo: cadastrar, editar e excluir vagas, cursos e negócios, com etapa de revisão (dados + pré-visualização) antes de publicar e opção de rascunho
+- [x] Favoritos: salvar vagas e cursos (botão de coração), filtro "só favoritos" e seção "Meus favoritos" na área restrita
 - [x] Candidatura às vagas: botão de candidatar-se, vínculo com o usuário logado, data registrada e acompanhamento do status (enviada, em análise ou encerrada) na área restrita
 
 
@@ -72,9 +73,9 @@ npm run lint     # análise estática
 src/
 ├── admin/        # Configuração dos tipos de conteúdo e gerenciador (lista → formulário → revisão)
 ├── components/   # Navbar, Footer, Layout, PageHero, InfoCard, FormField, ProtectedRoute, AdminRoute, AuthActions
-├── context/      # AuthProvider (autenticação), CandidaturasProvider e CatalogoProvider (vagas, cursos e negócios)
+├── context/      # AuthProvider (autenticação), CandidaturasProvider, FavoritosProvider e CatalogoProvider (vagas, cursos e negócios)
 ├── data/         # Dados de exemplo (vagas, cursos, negócios) e lista de e-mails administradores
-├── hooks/        # useAuth, useCandidaturas, useCatalogo
+├── hooks/        # useAuth, useCandidaturas, useCatalogo, useFavoritos
 ├── pages/        # Páginas da aplicação
 └── utils/        # Validadores de formulário
 ```
@@ -89,6 +90,7 @@ Acesse em `/admin` (também pelo botão "Abrir painel" na área restrita). Para 
 - A autenticação é **apenas demonstrativa**: usuários e sessão ficam no `localStorage`, com senha sem criptografia. Não oferece segurança real.
 - A recuperação de senha não envia e-mails.
 - O painel administrativo é **demonstrativo**: o acesso é decidido no navegador pelo e-mail, e o catálogo editado fica no `localStorage` (qualquer pessoa com acesso ao navegador poderia alterá-lo). Textos cadastrados no painel não têm tradução para o inglês.
+- Os favoritos também ficam no `localStorage`, vinculados ao e-mail do usuário; é preciso estar logado para salvar.
 - As candidaturas também ficam no `localStorage` (vinculadas ao e-mail do usuário). O andamento do status é **simulado** pelo botão "Simular andamento" na área restrita; sem backend, nenhuma empresa recebe a candidatura de fato.
 
 ## Melhorias planejadas (ainda não implementadas)

@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowUpRight, Briefcase, ShieldCheck, CalendarDays, FastForward, GraduationCap, LogOut, MapPin, Store } from 'lucide-react'
+import { ArrowUpRight, Briefcase, ShieldCheck, CalendarDays, Clock, FastForward, GraduationCap, Heart, LogOut, MapPin, Store } from 'lucide-react'
 import InfoCard from '../components/InfoCard'
 import { useAuth } from '../hooks/useAuth'
 import { useCandidaturas } from '../hooks/useCandidaturas'
 import { useCatalogo } from '../hooks/useCatalogo'
+import { useFavoritos } from '../hooks/useFavoritos'
 import { useIdioma } from '../idioma/useIdioma'
 import { infoStatus, proximoStatus } from '../data/statusCandidatura'
 import { formatarData } from '../utils/text'
@@ -13,7 +14,10 @@ export default function Dashboard() {
   const { t, td, idioma } = useIdioma()
   const { candidaturas, avancarStatus } = useCandidaturas()
   // Todas as vagas (inclusive rascunhos), para o histórico de candidaturas não perder o cargo.
-  const { jobs } = useCatalogo()
+  const { jobs, courses } = useCatalogo()
+  const { favoritos, alternar } = useFavoritos()
+  const favVagas = favoritos.filter((f) => f.tipo === 'job')
+  const favCursos = favoritos.filter((f) => f.tipo === 'course')
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -112,6 +116,111 @@ export default function Dashboard() {
           <h3>{t('dash.appsEmptyTitle')}</h3>
           <p className="muted">{t('dash.appsEmptyText')}</p>
           <Link to="/vagas" className="btn btn-primary">{t('home.card1.link')}</Link>
+        </div>
+      )}
+
+      <div className="section-head dashboard-section-head">
+        <div>
+          <span className="section-kicker">{t('fav.kicker')}</span>
+          <h2 id="meus-favoritos">{t('fav.title')}</h2>
+        </div>
+        <p className="muted">{t('fav.text')}</p>
+      </div>
+
+      {favoritos.length > 0 ? (
+        <div className="favorites">
+          {favVagas.length > 0 && (
+            <>
+              <h3 id="favoritos-vagas">{t('fav.jobs')}</h3>
+              <ul className="applications favorites-list" aria-labelledby="favoritos-vagas">
+                {favVagas.map((f) => {
+                  const job = jobs.find((j) => j.id === f.id)
+                  const nome = job ? td(job.cargo) : t('fav.unavailable')
+                  return (
+                    <li key={`job-${f.id}`} className="application">
+                      <div className="application-main">
+                        <h4>{nome}</h4>
+                        {job && <p className="card-subtitle">{job.empresa}</p>}
+                        <p className="card-meta">
+                          {job && (
+                            <>
+                              <MapPin size={16} aria-hidden="true" /> {job.local}
+                              <span aria-hidden="true">·</span>
+                            </>
+                          )}
+                          <CalendarDays size={16} aria-hidden="true" />
+                          {t('fav.savedOn', { date: formatarData(f.savedAt, idioma) })}
+                        </p>
+                      </div>
+                      <div className="application-side">
+                        {job?.publicado && (
+                          <Link to="/vagas" className="btn btn-outline btn-sm">{t('fav.viewJobs')}</Link>
+                        )}
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger btn-sm"
+                          aria-label={t('fav.removeAria', { nome })}
+                          onClick={() => alternar('job', f.id)}
+                        >
+                          <Heart size={16} aria-hidden="true" /> {t('fav.removeShort')}
+                        </button>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </>
+          )}
+
+          {favCursos.length > 0 && (
+            <>
+              <h3 id="favoritos-cursos">{t('fav.courses')}</h3>
+              <ul className="applications favorites-list" aria-labelledby="favoritos-cursos">
+                {favCursos.map((f) => {
+                  const curso = courses.find((c) => c.id === f.id)
+                  const nome = curso ? td(curso.nome) : t('fav.unavailable')
+                  return (
+                    <li key={`course-${f.id}`} className="application">
+                      <div className="application-main">
+                        <h4>{nome}</h4>
+                        {curso && <p className="card-subtitle">{td(curso.categoria)}</p>}
+                        <p className="card-meta">
+                          {curso && (
+                            <>
+                              <Clock size={16} aria-hidden="true" /> {td(curso.duracao)}
+                              <span aria-hidden="true">·</span>
+                            </>
+                          )}
+                          <CalendarDays size={16} aria-hidden="true" />
+                          {t('fav.savedOn', { date: formatarData(f.savedAt, idioma) })}
+                        </p>
+                      </div>
+                      <div className="application-side">
+                        {curso?.publicado && (
+                          <Link to="/capacitacao" className="btn btn-outline btn-sm">{t('fav.viewCourses')}</Link>
+                        )}
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger btn-sm"
+                          aria-label={t('fav.removeAria', { nome })}
+                          onClick={() => alternar('course', f.id)}
+                        >
+                          <Heart size={16} aria-hidden="true" /> {t('fav.removeShort')}
+                        </button>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="empty-state applications-empty">
+          <Heart size={40} aria-hidden="true" />
+          <h3>{t('fav.emptyTitle')}</h3>
+          <p className="muted">{t('fav.emptyText')}</p>
+          <Link to="/vagas" className="btn btn-primary">{t('fav.viewJobs')}</Link>
         </div>
       )}
 
