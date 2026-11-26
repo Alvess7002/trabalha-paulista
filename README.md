@@ -43,6 +43,7 @@ Reunir, em uma única plataforma, oportunidades de emprego, cursos de capacitaç
 - [x] Painel de Acessibilidade
 - [x] Tradução para Língua Inglesa
 - [x] Pesquisa por Data 
+- [x] Candidatura às vagas: botão de candidatar-se, vínculo com o usuário logado, data registrada e acompanhamento do status (enviada, em análise ou encerrada) na área restrita
 
 
 ## Tecnologias
@@ -69,9 +70,9 @@ npm run lint     # análise estática
 ```
 src/
 ├── components/   # Navbar, Footer, Layout, PageHero, InfoCard, FormField, ProtectedRoute, AuthActions
-├── context/      # AuthProvider e contexto de autenticação
+├── context/      # AuthProvider (autenticação) e CandidaturasProvider (candidaturas)
 ├── data/         # Dados demonstrativos (vagas, cursos, negócios)
-├── hooks/        # useAuth
+├── hooks/        # useAuth, useCandidaturas
 ├── pages/        # Páginas da aplicação
 └── utils/        # Validadores de formulário
 ```
@@ -81,12 +82,12 @@ src/
 - Sem backend nem banco de dados; todos os conteúdos são fictícios.
 - A autenticação é **apenas demonstrativa**: usuários e sessão ficam no `localStorage`, com senha sem criptografia. Não oferece segurança real.
 - A recuperação de senha não envia e-mails.
-- Não há busca, filtros ou candidatura a vagas.
+- As candidaturas também ficam no `localStorage` (vinculadas ao e-mail do usuário). O andamento do status é **simulado** pelo botão "Simular andamento" na área restrita; sem backend, nenhuma empresa recebe a candidatura de fato.
 
 ## Melhorias planejadas (ainda não implementadas)
 
 - Backend e banco de dados com autenticação real.
 - Cadastro de vagas, cursos e negócios por usuários.
 - Busca e filtros por categoria e bairro.
-- Candidatura a vagas e perfil de usuário.
+- Perfil de usuário e envio real das candidaturas às empresas, com atualização de status por elas.
 - Testes automatizados.

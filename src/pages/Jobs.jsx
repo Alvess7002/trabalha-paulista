@@ -1,13 +1,16 @@
 
 import { useState } from 'react'
-import { Briefcase, MapPin, SearchX } from 'lucide-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Briefcase, CheckCircle2, MapPin, SearchX, Send } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import InfoCard from '../components/InfoCard'
 import FormField from '../components/FormField'
 import { jobs } from '../data/jobs'
-import { normalize } from '../utils/text'
+import { normalize, formatarData } from '../utils/text'
 import { diasDesdePublicacao } from '../data/datasVagas'
 import { useIdioma } from '../idioma/useIdioma'
+import { useAuth } from '../hooks/useAuth'
+import { useCandidaturas } from '../hooks/useCandidaturas'
 
 const bairroOf = (job) => job.local.split(',')[0].trim()
 const sortPt = (a, b) => a.localeCompare(b, 'pt-BR')
@@ -23,8 +26,26 @@ const bairroOptions = [...new Set(jobs.map(bairroOf))]
 const EMPTY_FILTERS = { search: '', categoria: '', bairro: '', periodo: '', ordem: '' }
 
 export default function Jobs() {
-  const { t, td } = useIdioma()
+  const { t, td, idioma } = useIdioma()
+  const { user } = useAuth()
+  const { getCandidatura, candidatar } = useCandidaturas()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [filters, setFilters] = useState(EMPTY_FILTERS)
+  // Cargo da última vaga em que o usuário se candidatou (para o aviso de confirmação).
+  const [appliedCargo, setAppliedCargo] = useState(null)
+
+  const handleApply = (job) => {
+    // Sem login, leva o usuário ao login e o traz de volta para as vagas depois.
+    if (!user) {
+      navigate('/login', {
+        state: { noticeKey: 'jobs.needLoginApply', from: location.pathname },
+      })
+      return
+    }
+    const result = candidatar(job.id)
+    if (result.ok) setAppliedCargo(job.cargo)
+  }
 
   const handleChange = (e) =>
     setFilters({ ...filters, [e.target.name]: e.target.value })
@@ -160,9 +181,18 @@ export default function Jobs() {
           )}
         </div>
 
+        {appliedCargo && (
+          <div className="alert alert-success" role="status">
+            {t('jobs.applySuccess', { cargo: td(appliedCargo) })}{' '}
+            <Link to="/area-restrita" className="alert-link">{t('jobs.viewApplications')}</Link>
+          </div>
+        )}
+
         {count > 0 ? (
           <div className="grid">
-            {filteredJobs.map((job) => (
+            {filteredJobs.map((job) => {
+              const candidatura = getCandidatura(job.id)
+              return (
               <InfoCard
                 key={job.id}
                 icon={Briefcase}
@@ -172,8 +202,30 @@ export default function Jobs() {
                 meta={`${job.local} · ${postedText(job)}`}
                 metaIcon={MapPin}
                 description={td(job.descricao)}
+                footer={
+                  candidatura ? (
+                    <>
+                      <span className="apply-done">
+                        <CheckCircle2 size={18} aria-hidden="true" /> {t('jobs.applied')}
+                      </span>
+                      <span className="muted apply-date">
+                        {t('jobs.appliedOn', { date: formatarData(candidatura.appliedAt, idioma) })}
+                      </span>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-block"
+                      aria-label={t('jobs.applyAria', { cargo: td(job.cargo), empresa: job.empresa })}
+                      onClick={() => handleApply(job)}
+                    >
+                      <Send size={18} aria-hidden="true" /> {t('jobs.apply')}
+                    </button>
+                  )
+                }
               />
-            ))}
+              )
+            })}
           </div>
         ) : (
           <div className="empty-state">

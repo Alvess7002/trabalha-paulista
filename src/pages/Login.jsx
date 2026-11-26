@@ -34,7 +34,7 @@ export default function Login() {
       return
     }
     setFeedback({ type: 'success', key: 'login.success' })
-    setTimeout(() => navigate('/area-restrita'), 700)
+    setTimeout(() => navigate(location.state?.from ?? '/area-restrita'), 700)
   }
 
   const feedbackText = feedback && (feedback.key ? t(feedback.key) : tm(feedback.message))
