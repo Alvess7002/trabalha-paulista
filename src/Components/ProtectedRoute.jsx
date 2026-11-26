@@ -5,7 +5,7 @@ export default function ProtectedRoute({ children }) {
   const { user } = useAuth()
   if (!user) {
     return (
-      <Navigate to="/login" replace state={{ noticeKey: 'login.needLogin' }} />
+      <Navigate to="/login" replace state={{ notice: 'login.needLogin' }} />
     )
   }
   return children

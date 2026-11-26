@@ -4,23 +4,21 @@ import { KeyRound } from 'lucide-react'
 import FormField from '../components/FormField'
 import { useFeatures } from '../hooks/useFeatures'
 import { isValidEmail } from '../utils/validators'
-import { useIdioma } from '../idioma/useIdioma'
 
 export default function ForgotPassword() {
-  const { t } = useIdioma()
+  const { t } = useFeatures()
   const [email, setEmail] = useState('')
-  // Guarda a chave do erro (não o texto) para que ele troque de idioma junto com o site.
-  const [errorKey, setErrorKey] = useState('')
+  const [error, setError] = useState('')
   const [sent, setSent] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!isValidEmail(email)) {
-      setErrorKey('err.email')
+      setError('err.email')
       setSent(false)
       return
     }
-    setErrorKey('')
+    setError('')
     setSent(true)
   }
 
@@ -38,8 +36,8 @@ export default function ForgotPassword() {
         )}
 
         <form onSubmit={handleSubmit} noValidate>
-          <FormField label={t('field.email')} name="email" type="email" autoComplete="email"
-            value={email} onChange={(e) => setEmail(e.target.value)} error={errorKey && t(errorKey)} />
+          <FormField label={t('form.email')} name="email" type="email" autoComplete="email"
+            value={email} onChange={(e) => setEmail(e.target.value)} error={error ? t(error) : undefined} />
           <button type="submit" className="btn btn-primary btn-block">{t('forgot.submit')}</button>
         </form>
 

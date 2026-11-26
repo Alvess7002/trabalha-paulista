@@ -1,12 +1,12 @@
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '../hooks/useTheme'
-import { useIdioma } from '../idioma/useIdioma'
+import { useFeatures } from '../hooks/useFeatures'
 
 export default function ThemeToggle() {
   const { theme, toggle } = useTheme()
-  const { t } = useIdioma()
+  const { t } = useFeatures()
   const isDark = theme === 'dark'
-  const label = isDark ? t('theme.light') : t('theme.dark')
+  const label = isDark ? t('theme.toLight') : t('theme.toDark')
 
   return (
     <button type="button" className="theme-toggle" onClick={toggle} aria-label={label} title={label}>

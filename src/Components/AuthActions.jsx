@@ -1,13 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, LogIn, LogOut, UserPlus } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
-import { useIdioma } from '../idioma/useIdioma'
+import { useFeatures } from '../hooks/useFeatures'
 
 export default function AuthActions({ onNavigate }) {
   const { user, logout } = useAuth()
   const { t } = useFeatures()
   const navigate = useNavigate()
-  const { t } = useIdioma()
 
   const handleLogout = () => {
     logout()
