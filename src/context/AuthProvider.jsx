@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
     const users = read(USERS_KEY, [])
     const normalized = email.trim().toLowerCase()
     if (users.some((u) => u.email === normalized)) {
-      return { ok: false, message: 'Este e-mail já está cadastrado.' }
+      return { ok: false, message: 'register.emailTaken' }
     }
     const next = [...users, { name: name.trim(), email: normalized, password }]
     localStorage.setItem(USERS_KEY, JSON.stringify(next))
@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
     const found = read(USERS_KEY, []).find(
       (u) => u.email === normalized && u.password === password,
     )
-    if (!found) return { ok: false, message: 'E-mail ou senha incorretos.' }
+    if (!found) return { ok: false, message: 'login.badCredentials' }
     const session = { name: found.name, email: found.email }
     localStorage.setItem(SESSION_KEY, JSON.stringify(session))
     setUser(session)

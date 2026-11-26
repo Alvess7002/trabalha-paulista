@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { KeyRound } from 'lucide-react'
 import FormField from '../components/FormField'
+import { useFeatures } from '../hooks/useFeatures'
 import { isValidEmail } from '../utils/validators'
 import { useIdioma } from '../idioma/useIdioma'
 

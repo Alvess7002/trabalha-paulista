@@ -6,3 +6,5 @@ export const isValidFullName = (value) => {
 }
 
 export const isValidPassword = (value) => value.length >= 8
+
+export const isValidMessage = (value) => value.trim().length >= 10

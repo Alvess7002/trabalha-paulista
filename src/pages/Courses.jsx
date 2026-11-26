@@ -1,6 +1,7 @@
 import { Clock, GraduationCap } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import InfoCard from '../components/InfoCard'
+import FavoriteButton from '../components/FavoriteButton'
 import { courses } from '../data/courses'
 import { useIdioma } from '../idioma/useIdioma'
 
