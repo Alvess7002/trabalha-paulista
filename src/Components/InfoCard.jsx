@@ -11,16 +11,19 @@ export default function InfoCard({
   description,
   to,
   linkLabel,
+  className = '',
 }) {
   return (
-    <article className="card">
+    <article className={`card ${className}`.trim()}>
       {Icon && (
         <span className="card-icon">
           <Icon size={24} aria-hidden="true" />
         </span>
       )}
       {badge && <span className="badge">{badge}</span>}
-      <h3>{title}</h3>
+      <div className="card-title-row">
+        <h3>{title}</h3>
+      </div>
       {subtitle && <p className="card-subtitle">{subtitle}</p>}
       {meta && (
         <p className="card-meta">
