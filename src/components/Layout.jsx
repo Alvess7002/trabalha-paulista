@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import PainelAcessibilidade from './PainelAcessibilidade'
+import BotaoTopo from './BotaoTopo'
 import { useIdioma } from '../idioma/useIdioma'
 
 export default function Layout() {
@@ -22,6 +23,7 @@ export default function Layout() {
       </main>
       <Footer />
       <PainelAcessibilidade />
+      <BotaoTopo />
     </>
   )
 }
