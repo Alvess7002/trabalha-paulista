@@ -100,3 +100,6 @@ Acesse em `/admin` (também pelo botão "Abrir painel" na área restrita). Para 
 - Busca e filtros por categoria e bairro.
 - Perfil de usuário e envio real das candidaturas às empresas, com atualização de status por elas.
 - Testes automatizados.
+
+
+<img width="1080" height="1080" alt="image" src="https://github.com/user-attachments/assets/5dbc73c8-85c5-471a-a9ef-8b36e0251bc4" />
