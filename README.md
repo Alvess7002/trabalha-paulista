@@ -1,5 +1,7 @@
 # Trabalha Paulista
 
+Deploy: https://trabalha-paulista-main.vercel.app
+
 Plataforma de empregabilidade, capacitação profissional e empreendedorismo local em Paulista–PE.
 
 > Projeto acadêmico desenvolvido de forma progressiva. Esta é a primeira versão, com dados fictícios e sem backend.
