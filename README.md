@@ -102,4 +102,4 @@ Acesse em `/admin` (também pelo botão "Abrir painel" na área restrita). Para 
 - Testes automatizados.
 
 
-<img width="1080" height="1350" alt="image" src="https://github.com/user-attachments/assets/5dbc73c8-85c5-471a-a9ef-8b36e0251bc4" />
+<img width="1920" height="935" alt="image" src="https://github.com/user-attachments/assets/5dbc73c8-85c5-471a-a9ef-8b36e0251bc4" />
